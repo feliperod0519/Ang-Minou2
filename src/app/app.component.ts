@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ComponentCommService } from '../app/services/component-comm.service';
 
 @Component({
   selector: 'app-root',
@@ -8,16 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   
-  title = 'Felipe-Rod';
-  users: any;
-
-  constructor(private http: HttpClient){
+  title = 'Felipe-Rod-POC';
+  loggedUser = ''
+ 
+  constructor(private http: HttpClient, private commComponentService: ComponentCommService ){
   }
 
   ngOnInit(): void {
-    this.http.get("https://localhost:7246/api/users").subscribe(d=>{
-      this.users=d;
-      console.log(this.users);
-    });
+    this.loggedUser = '';
+  }
+
+  onEmailChanged(email:string){
+    this.loggedUser = email;
+    this.commComponentService.email = this.loggedUser;
   }
 }
